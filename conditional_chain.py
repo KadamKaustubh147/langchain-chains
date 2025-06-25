@@ -39,8 +39,10 @@ prompt3 = PromptTemplate(
 )
 
 branch_chain = RunnableBranch(
+    # lambdas are inline functions kinda like callback functions in JS
     (lambda x:x.sentiment == 'positive', prompt2 | model | parser),
     (lambda x:x.sentiment == 'negative', prompt3 | model | parser),
+    # runnable lambda is used as the default required is a chain but the string is not a chain
     RunnableLambda(lambda x: "could not find sentiment")
 )
 
